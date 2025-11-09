@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Text, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { StyleSheet, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Link } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { useState } from "react";
@@ -9,6 +9,8 @@ import ThemedText from "../../components/ThemedText";
 import Spacer from "../../components/Spacer";
 import ThemedButton from "../../components/ThemedButton";
 import ThemedTextInput from "../../components/ThemedTextInput";
+
+
 import { useUser } from "../../hooks/useUser";
 
 const Login = () => {
@@ -33,7 +35,7 @@ const Login = () => {
     <ThemedView style={styles.container}>
         <Spacer />
         <ThemedText title={true} style={styles.title}>
-        Loginn to ur Page
+        Login to ur Page
         </ThemedText>
 
         <ThemedTextInput
@@ -65,6 +67,7 @@ const Login = () => {
           Register here if u are new
         </ThemedText>
       </Link>
+
     </ThemedView>
     </TouchableWithoutFeedback>
   );
