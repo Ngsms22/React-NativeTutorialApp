@@ -4,16 +4,16 @@ import { useEffect } from "react"
 import { Text } from "react-native"
 
 const UserOnly = ({children}) => {
-    const { user, authChecked } = useUser()
+    const { user, authCheck } = useUser()
     const router = useRouter()
 
     useEffect(()=>{
-        if (authChecked && user === null ){
+        if (authCheck && user === null ){
             router.replace('/login')
         }
-    },[user,authChecked])
+    },[user,authCheck])
 
-    if  (!authChecked || !user ) {
+    if  (!authCheck || !user ) {
         return(
             <Text>Loading...</Text>
         )

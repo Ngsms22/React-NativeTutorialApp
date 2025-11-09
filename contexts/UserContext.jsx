@@ -52,7 +52,7 @@ export function UserProvider({ children }) {
   }
 
   useEffect(()=> {
-
+    getInitialUserValue()
   },[])
 
   return (
