@@ -1,11 +1,40 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Text, TouchableWithoutFeedback, keyboard } from 'react-native'
+import { useBooks } from '../../hooks/useBooks'
+import { useRouter } from 'expo-router'
+import { useState } from 'react'
 
 import Spacer from '../../components/Spacer'
 import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
+import ThemedTextInput from '../../components/ThemedTextInput'
+import ThemedButton from '../../components/ThemedButton'
 
 const Create = () => {
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [loading, setLoading] = useState (false)
+  const [description, setDescription] = useState('')
+
+  const { createBook } = useBooks()
+  const router = useRouter()
+
+  const handleSubmit = async()=>{
+    if (!title.trim() || !author.trim() || !description.trim()) return
+
+    setLoading (true)
+    await createBook({title, author, description})
+
+    setTitle("")
+    setAuthor("")
+    setDescription("")
+
+    router.replace('books')
+
+    setLoading (false)
+  }
+
   return (
+    <TouchableWithoutFeedback>
     <ThemedView style={styles.container}>
 
         <ThemedText title={true} style={styles.heading}>
@@ -13,7 +42,38 @@ const Create = () => {
         </ThemedText>
         <Spacer/>
 
+    <ThemedTextInput
+      style ={styles.input}
+      placeholder='Title'
+      value={title}
+      onChangeText={setTitle}
+    />
+    <Spacer/>
+
+    <ThemedTextInput
+    style={styles.input}
+      placeholder='Author'
+      value={author}
+      onChangeText={setAuthor}
+    />
+    <Spacer/>
+    <ThemedTextInput
+    style={styles.multiline}
+    placeholder='Book Description'
+    value={description}
+    onChangeText={setDescription}
+    multiline={true}
+    />
+    <Spacer/>
+
+    <ThemedButton onPress={handleSubmit} disabled= {loading}>
+      <Text style={{color:'#fff'}}>
+        {loading ? 'Creating...' : 'Create Book'}
+      </Text>
+    </ThemedButton>
+
     </ThemedView>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -30,4 +90,17 @@ const styles = StyleSheet.create({
         fontSize:20,
         textAlign:'center',
     },
+    input: {
+      padding: 20,
+      borderRadius:6,
+      alignSelf:'stretch',
+      marginHorizontal:40,
+    },
+    multiline: {
+      padding:20,
+      borderRadius:6,
+      minHeight:100,
+      alignSelf:'stretch',
+      marginHorizontal:40,
+    }
 })
